@@ -170,7 +170,7 @@ y.addEventListener('click',function(){
     else {
     soduko_solver(0,0) 
     console.log(mat)
-    $(".Table").hide()
+   // $(".Table").hide()
     var Rezult = `<table class="Table"> 
     <tr>  
   <td  class='hola'>${mat[0][0]}</td>
@@ -278,7 +278,8 @@ y.addEventListener('click',function(){
                                    <td  class='hola'>${mat[8][8]}</td>
                                      </tr>// closing 8 row 
        </table>`
-      $(Rezult).insertBefore("div")
+     // $(Rezult).insertBefore("div")
+    $("body").html(Rezult)
     }
 })
 // When i Click on The Bottom its Changes The input to disable 
