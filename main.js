@@ -9,10 +9,30 @@ var mat = [
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
 ]        
+// Now Add Random Numbers 
+function random(x){
+ return Math.floor(Math.random()*x) 
+}
+/////////////
+$("#Won").hide() 
+$("#Lose").hide() 
 ///////////////
 var x = $("input")
 for (let i = 0 ; i < 81 ; i ++){      // just wana add unique id to all input  
 $(x[i]).attr("id",`a${i}`)
+}
+for (let i = 0 ; i<=random(10) ; i ++){ 
+ var x =random(81)
+var r = (random(8))+1
+if(canWePlace(Math.min(Math.floor(x/9),8),x%9,r))
+{
+    console.log(Math.min(Math.floor(x/9),8))
+    console.log(x%9)
+    console.log(r)
+console.log("****************")
+    $(`#a${x}`).attr("value",`${r}`)
+    $(`#a${x}`).attr('disabled','disabled');
+}
 }
 /////////////
 var x =document.getElementById("wow") 
@@ -20,11 +40,11 @@ x.addEventListener('click',function(){
 k = 0 ; 
 for (var i = 0 ; i< 9 ; i ++){ 
 for (var j  = 0 ; j< 9 ; j ++){                                   ////event click When User is Done From Playing 
-var x = parseInt(document.getElementById(`a${k++}`).value) // remplir the Mat with the value added by the user  ; 
-if(!isNaN(x))
-mat[i][j]=x 
+var x = parseInt(document.getElementById(`a${k++}`).value)// remplir the Mat with the value added by the user  ; 
+if(isNaN(x))
+mat[i][j]=0
 else 
-mat[i][j]=0  
+mat[i][j]=x
 }
 }
 console.log(mat)
@@ -103,6 +123,7 @@ if(counter>1)
 return false 
 counter=0
 for (let x = 0; x <9 ;x++){ 
+    
 if(mat[x][i]==r)
 counter++ 
 }
@@ -112,13 +133,14 @@ counter=0
 var row = (Math.floor(i/3)*3) 
 var col = (Math.floor(j/3)*3)
 for (let x = 0 ; x<3 ; x++){ 
-if(mat[i+row][j+col]==r)
+for (let x1=  0 ; x1<3 ;x1++){
+    if(mat[x+row][x1+col]==r)
 counter++ 
+}
 }
 if(counter>1)
 return false 
 }
-return true 
 }
 
 return true 
@@ -129,20 +151,27 @@ console.log(y)
 y.addEventListener('click',function(){ 
     // Now Check if He complete all The soduko if it true then you must check if the sodukou is true else 
     if(Complete_all()){
-        alert("hi")
-       if(doesItTrue()){
-           alert("Hola")  
-  $("body").hide()  
-  $("#Won").show() 
-        // Show You Won 
+       if(doesItTrue()){    
+     $("a").hide()
+     $("button").hide() 
+    $("#Won").show() 
+         
+       }
+       else 
+       {
+        $("a").hide()
+        $("button").hide() 
+
+        $("#Lose").show() 
+
+
        }
     }
     else {
     soduko_solver(0,0) 
     console.log(mat)
     $(".Table").hide()
-    //when You hide You add Before the div the New Table 
-    var Rezult = ` <table class="Table"> 
+    var Rezult = `<table class="Table"> 
     <tr>  
   <td  class='hola'>${mat[0][0]}</td>
   <td   class='hola'>${mat[0][1]}</td>
